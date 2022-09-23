@@ -20,6 +20,7 @@ def create_tcp_socket():
     print('Socket created successfully')
     return s
 
+#connect to the socket
 def connect(addr):
     try:
         s = create_tcp_socket()
@@ -28,15 +29,15 @@ def connect(addr):
         s.shutdown(socket.SHUT_WR)
         full_data = s.recv(BUFFER_SIZE)
         print(full_data)
-    except Exception as error:
-        print(error)
+    except Exception as e:
+        print(e)
     finally:
         s.close()
 
 def main():
     address = [(HOST, PORT)]
     with Pool() as p:
-        p.map(connect, address * 10)
+        p.map(connect, address * 5)
 
 if __name__ == "__main__":
     main()

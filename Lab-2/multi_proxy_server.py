@@ -9,18 +9,6 @@ HOST = ""
 PORT = 8001
 BUFFER_SIZE = 1024
 
-def handle_request(addr, conn, proxy_end):
-    print(f"Connected by {addr}")
-    send_full_data = conn.recv(BUFFER_SIZE)
-    print(f"Sending data {send_full_data}")
-    proxy_end.sendall(send_full_data)
-    proxy_end.shutdown(socket.SHUT_WR)
-    data = proxy_end.recv(BUFFER_SIZE)
-    print(f"Sending data {data} to client")
-    conn.sendall(data)
-    conn.shutdown(socket.SHUT_RDWR)
-    conn.close()
-
 #get host information
 def get_remote_ip(host):
     print(f'Getting IP for {host}')
@@ -31,6 +19,23 @@ def get_remote_ip(host):
         sys.exit()
     print (f'Ip address of {host} is {remote_ip}')
     return remote_ip
+
+#handle requests 
+#get data from client
+#send data to google
+#recieve data from google
+#pass the data back to the client
+def handle_request(addr, conn, proxy_end):
+    print(f"Connected by {addr}")
+    send_full_data = conn.recv(BUFFER_SIZE)
+    print(f"Sending data {send_full_data}")
+    proxy_end.sendall(send_full_data)
+    proxy_end.shutdown(socket.SHUT_WR)
+    recv_data = proxy_end.recv(BUFFER_SIZE)
+    print(f"Sending data {recv_data} to client")
+    conn.sendall(recv_data)
+    conn.shutdown(socket.SHUT_RDWR)
+    conn.close()
 
 def main():
     extern_host = 'www.google.com'
