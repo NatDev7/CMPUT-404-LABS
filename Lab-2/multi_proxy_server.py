@@ -21,10 +21,8 @@ def get_remote_ip(host):
     return remote_ip
 
 #handle requests 
-#get data from client
-#send data to google
-#recieve data from google
-#pass the data back to the client
+#get data from the client and sed data to google
+#recieve data from google and pass the data back to the client
 def handle_request(addr, conn, proxy_end):
     print(f"Connected by {addr}")
     send_full_data = conn.recv(BUFFER_SIZE)
